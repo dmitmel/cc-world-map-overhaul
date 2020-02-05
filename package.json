@@ -1,0 +1,8 @@
+{
+  "name": "cc-world-map-overhaul",
+  "description": "A better world map for CrossCode",
+  "version": "0.0.0",
+  "dependencies": {
+    "ccloader": "*"
+  }
+}
