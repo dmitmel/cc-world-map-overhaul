@@ -3,10 +3,12 @@ const CHANGED_BUTTON_POSITIONS = {
   'autumn-area': { x: 259, y: 158 },
   'autumn-fall': { x: 329, y: 163 },
   'bergen-trails': { x: 189, y: 168 },
+  'cargo-ship': { x: 370, y: 260 },
   'cold-dng': { x: 204, y: 68 },
   forest: { x: 415, y: 153 },
-  'jungle-city': { x: 313, y: 128 },
   jungle: { x: 279, y: 113 },
+  'jungle-city': { x: 313, y: 128 },
+  'rhombus-sqr': { x: 275, y: 248 },
 };
 
 for (let id in CHANGED_BUTTON_POSITIONS) {
