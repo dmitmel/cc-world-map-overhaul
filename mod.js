@@ -1,3 +1,21 @@
+const CHANGED_AREA_BUTTON_POSITIONS = {
+  arid: { x: 454, y: 213 },
+  'autumn-area': { x: 259, y: 158 },
+  'autumn-fall': { x: 329, y: 163 },
+  'bergen-trails': { x: 189, y: 168 },
+  'cold-dng': { x: 204, y: 68 },
+  forest: { x: 415, y: 153 },
+  'jungle-city': { x: 313, y: 128 },
+  jungle: { x: 279, y: 113 },
+};
+
+for (let id in CHANGED_AREA_BUTTON_POSITIONS) {
+  if (Object.prototype.hasOwnProperty.call(CHANGED_AREA_BUTTON_POSITIONS, id)) {
+    let pos = CHANGED_AREA_BUTTON_POSITIONS[id];
+    sc.map.areas[id].position = pos;
+  }
+}
+
 sc.AreaButton.inject({
   patchedGfx: new ig.Image('media/gui/patched-area-buttons.png'),
   updateDrawables(renderer) {
