@@ -9,6 +9,7 @@ const CHANGED_BUTTON_POSITIONS = {
   jungle: { x: 279, y: 113 },
   'jungle-city': { x: 313, y: 128 },
   'rhombus-sqr': { x: 275, y: 248 },
+  'rookie-harbor': { x: 273, y: 198 },
 };
 
 for (let id in CHANGED_BUTTON_POSITIONS) {
