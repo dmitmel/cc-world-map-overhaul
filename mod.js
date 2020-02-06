@@ -12,12 +12,9 @@ const CHANGED_BUTTON_POSITIONS = {
   'rookie-harbor': { x: 273, y: 198 },
 };
 
-for (let id in CHANGED_BUTTON_POSITIONS) {
-  if (Object.prototype.hasOwnProperty.call(CHANGED_BUTTON_POSITIONS, id)) {
-    let pos = CHANGED_BUTTON_POSITIONS[id];
-    sc.map.areas[id].position = pos;
-  }
-}
+Object.keys(CHANGED_BUTTON_POSITIONS).forEach(id => {
+  sc.map.areas[id].position = CHANGED_BUTTON_POSITIONS[id];
+});
 
 const BUTTON_SPRITE = {
   srcX: 0,
@@ -89,5 +86,38 @@ sc.AreaButton.inject({
       renderer.addGfx(this.gfx, 1, 2, 304, 440, 3, 3);
       renderer.addGfx(this.gfx, -11, -8, 280, 424, 16, 11);
     }
+  },
+});
+
+sc.MapWorldMap.inject({
+  _hiddenAreas: null,
+  _hiddenAreasGfx: null,
+
+  init() {
+    this._hiddenAreas = {
+      arid: true,
+    };
+    this._hiddenAreasGfx = [];
+
+    this.parent();
+
+    Object.keys(this._hiddenAreas).forEach(id => {
+      if (this._hiddenAreas[id]) {
+        this._hiddenAreasGfx.push(new ig.Image(`media/gui/${id}-overlay.png`));
+      }
+    });
+  },
+
+  _addAreaButton(id, data) {
+    let result = this.parent(id, data);
+    this._hiddenAreas[id] = false;
+    return result;
+  },
+
+  updateDrawables(renderer) {
+    this.parent(renderer);
+    this._hiddenAreasGfx.forEach(gfx => {
+      renderer.addGfx(gfx, 0, 0, 0, 0, this.hook.size.x, this.hook.size.y);
+    });
   },
 });
