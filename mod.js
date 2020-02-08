@@ -1,3 +1,5 @@
+const ASSETS_DIR = 'media/gui/better-world-map';
+
 const CHANGED_BUTTON_POSITIONS = {
   arid: { x: 454, y: 213 },
   'autumn-area': { x: 259, y: 158 },
@@ -12,9 +14,17 @@ const CHANGED_BUTTON_POSITIONS = {
   'rookie-harbor': { x: 273, y: 198 },
 };
 
-Object.keys(CHANGED_BUTTON_POSITIONS).forEach(id => {
-  sc.map.areas[id].position = CHANGED_BUTTON_POSITIONS[id];
-});
+const AREAS_WITH_REVEAL = [
+  'arid',
+  'autumn-area',
+  'autumn-fall',
+  'bergen-trails',
+  'forest',
+  'heat-area',
+  'jungle',
+  'rookie-harbor',
+  'sea',
+];
 
 const BUTTON_SPRITE = {
   srcX: 0,
@@ -43,8 +53,12 @@ const BUTTON_HIGHLIGHT_SPRITE = {
   posY: CROSSHAIR_SPRITE.posY,
 };
 
+Object.keys(CHANGED_BUTTON_POSITIONS).forEach(id => {
+  sc.map.areas[id].position = CHANGED_BUTTON_POSITIONS[id];
+});
+
 sc.AreaButton.inject({
-  patchedGfx: new ig.Image('media/gui/patched-area-buttons.png'),
+  patchedGfx: new ig.Image(`${ASSETS_DIR}/patched-area-buttons.png`),
 
   updateDrawables(renderer) {
     if (this.focus) {
@@ -90,34 +104,28 @@ sc.AreaButton.inject({
 });
 
 sc.MapWorldMap.inject({
-  _hiddenAreas: null,
-  _hiddenAreasGfx: null,
+  _seaGfx: new ig.Image(`${ASSETS_DIR}/sea.png`),
+  _areasGfx: null,
 
   init() {
-    this._hiddenAreas = {
-      arid: true,
-    };
-    this._hiddenAreasGfx = [];
-
+    this._areasGfx = [];
     this.parent();
-
-    Object.keys(this._hiddenAreas).forEach(id => {
-      if (this._hiddenAreas[id]) {
-        this._hiddenAreasGfx.push(new ig.Image(`media/gui/${id}-overlay.png`));
-      }
-    });
   },
 
   _addAreaButton(id, data) {
     let result = this.parent(id, data);
-    this._hiddenAreas[id] = false;
+    if (AREAS_WITH_REVEAL.includes(id)) {
+      this._areasGfx.push(new ig.Image(`${ASSETS_DIR}/${id}.png`));
+    }
     return result;
   },
 
   updateDrawables(renderer) {
-    this.parent(renderer);
-    this._hiddenAreasGfx.forEach(gfx => {
-      renderer.addGfx(gfx, 0, 0, 0, 0, this.hook.size.x, this.hook.size.y);
+    let size = this.hook.size;
+    renderer.addColor('black', 0, 0, size.x, size.y);
+    renderer.addGfx(this._seaGfx, 0, 0, 0, 0, size.x, size.y);
+    this._areasGfx.forEach(gfx => {
+      renderer.addGfx(gfx, 0, 0, 0, 0, size.x, size.y);
     });
   },
 });
