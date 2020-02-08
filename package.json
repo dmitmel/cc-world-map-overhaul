@@ -1,9 +1,7 @@
 {
   "name": "cc-world-map-overhaul",
   "description": "A better world map for CrossCode",
+  "homepage": "https://github.com/dmitmel/cc-world-map-overhaul",
   "version": "0.0.0",
-  "main": "mod.js",
-  "dependencies": {
-    "ccloader": "*"
-  }
+  "main": "mod.js"
 }
