@@ -1,4 +1,4 @@
-ig.module('game.feature.bee.gui.hud.exp-hud')
+ig.module('game.feature.world-map-overhaul')
   .requires(
     'game.feature.menu.map-model',
     'game.feature.menu.gui.map.map-worldmap',
