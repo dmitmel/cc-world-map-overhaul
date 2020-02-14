@@ -30,7 +30,6 @@ ig.module('game.feature.world-map-overhaul')
       'heat-area',
       'jungle',
       'rookie-harbor',
-      'sea',
     ];
 
     const BUTTON_SPRITE = {
@@ -124,12 +123,24 @@ ig.module('game.feature.world-map-overhaul')
         this.parent();
       },
 
-      _addAreaButton(id, data) {
-        let result = this.parent(id, data);
-        if (AREAS_WITH_REVEAL.includes(id)) {
-          this._areasGfx.push(new ig.Image(`${ASSETS_DIR}/${id}.png`));
-        }
-        return result;
+      _addAreas() {
+        let { areas } = sc.map;
+        Object.keys(areas).forEach(id => {
+          let area = areas[id];
+          let visited =
+            (!area.condition ||
+              new ig.VarCondition(area.condition).evaluate()) &&
+            sc.map.getVisitedArea(id);
+          if (visited) {
+            this.addChildGui(this._addAreaButton(id, area));
+          }
+          if (AREAS_WITH_REVEAL.includes(id)) {
+            let overlayType = visited ? 'colored' : 'default';
+            this._areasGfx.push(
+              new ig.Image(`${ASSETS_DIR}/overlays/${overlayType}/${id}.png`),
+            );
+          }
+        });
       },
 
       updateDrawables(renderer) {
