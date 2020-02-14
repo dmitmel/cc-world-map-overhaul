@@ -8,7 +8,7 @@ This mod hides unvisited areas to avoid in-game spoilers. It also changes the ar
 
 ## Authors
 
-**Packy** came up with the concept and drew the map (see file `assets/media/gui/better-world-map/_map.psd`). Note that this map is comprised of downscaled sprites from CrossCode, so credits for them goes to RadicalFishGames.
+**Packy** came up with the concept and drew the map (see file `assets/media/gui/better-world-map/final.psd`). Note that this map is comprised of downscaled sprites from CrossCode, so credits for them goes to RadicalFishGames.
 
 **dmitmel** wrote the source code, drew some GUI sprites (which are based on some sprites from CrossCode) and cut out separate areas from the map file.
 

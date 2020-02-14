@@ -2,6 +2,6 @@
   "name": "cc-world-map-overhaul",
   "description": "A better world map",
   "homepage": "https://github.com/dmitmel/cc-world-map-overhaul",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "prestart": "prestart.js"
 }

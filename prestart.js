@@ -4,7 +4,7 @@ ig.module('game.feature.world-map-overhaul')
     'game.feature.menu.gui.map.map-worldmap',
     'impact.base.image',
   )
-  .defines(function() {
+  .defines(() => {
     const ASSETS_DIR = 'media/gui/better-world-map';
 
     const CHANGED_BUTTON_POSITIONS = {
