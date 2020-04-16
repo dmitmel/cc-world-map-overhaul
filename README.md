@@ -1,5 +1,7 @@
 # cc-world-map-overhaul
 
+[![go to the releases page](https://raw.githubusercontent.com/CCDirectLink/organization/master/assets/badges/releases@2x.png)](https://github.com/dmitmel/cc-world-map-overhaul/releases)
+
 A better world map for CrossCode.
 
 ![screenshot](screenshot.png)
