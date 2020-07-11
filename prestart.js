@@ -62,9 +62,9 @@ ig.module('game.feature.world-map-overhaul')
     sc.MapModel.inject({
       initAreas() {
         this.parent();
-        Object.keys(CHANGED_BUTTON_POSITIONS).forEach(id => {
-          this.areas[id].position = CHANGED_BUTTON_POSITIONS[id];
-        });
+        for (let [id, pos] of Object.entries(CHANGED_BUTTON_POSITIONS)) {
+          this.areas[id].position = pos;
+        }
       },
     });
 
@@ -116,40 +116,45 @@ ig.module('game.feature.world-map-overhaul')
 
     sc.MapWorldMap.inject({
       _seaGfx: new ig.Image(`${ASSETS_DIR}/sea.png`),
-      _areasGfx: null,
+      _areasGfx: [],
+      _areaVisitStatuses: null,
 
-      init() {
-        this._areasGfx = [];
-        this.parent();
+      _addAreas(...args) {
+        this._areaVisitStatuses = new Map();
+        for (let id of AREAS_WITH_REVEAL) {
+          this._areaVisitStatuses.set(id, false);
+        }
+
+        let result = this.parent(...args);
+
+        for (let [id, visited] of this._areaVisitStatuses) {
+          let overlayType = visited ? 'colored' : 'default';
+          this._areasGfx.push(
+            new ig.Image(`${ASSETS_DIR}/overlays/${overlayType}/${id}.png`),
+          );
+        }
+        this._areaVisitStatuses = null;
+
+        return result;
       },
 
-      _addAreas() {
-        let { areas } = sc.map;
-        Object.keys(areas).forEach(id => {
-          let area = areas[id];
-          let visited =
-            (!area.condition ||
-              new ig.VarCondition(area.condition).evaluate()) &&
-            sc.map.getVisitedArea(id);
-          if (visited) {
-            this.addChildGui(this._addAreaButton(id, area));
-          }
-          if (AREAS_WITH_REVEAL.includes(id)) {
-            let overlayType = visited ? 'colored' : 'default';
-            this._areasGfx.push(
-              new ig.Image(`${ASSETS_DIR}/overlays/${overlayType}/${id}.png`),
-            );
-          }
-        });
+      _addAreaButton(id, area, ...args) {
+        let btn = this.parent(id, area, ...args);
+        if (this._areaVisitStatuses.has(id)) {
+          this._areaVisitStatuses.set(id, true);
+        }
+        return btn;
       },
 
       updateDrawables(renderer) {
         let size = this.hook.size;
         renderer.addColor('black', 0, 0, size.x, size.y);
         renderer.addGfx(this._seaGfx, 0, 0, 0, 0, size.x, size.y);
-        this._areasGfx.forEach(gfx => {
-          renderer.addGfx(gfx, 0, 0, 0, 0, size.x, size.y);
-        });
+
+        let gfxs = this._areasGfx;
+        for (let i = 0, len = gfxs.length; i < len; i++) {
+          renderer.addGfx(gfxs[i], 0, 0, 0, 0, size.x, size.y);
+        }
       },
     });
   });
