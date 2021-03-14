@@ -8,29 +8,33 @@ ig.module('game.feature.world-map-overhaul')
     const ASSETS_DIR = 'media/gui/better-world-map';
 
     const CHANGED_BUTTON_POSITIONS = {
-      arid: { x: 454, y: 213 },
       'autumn-area': { x: 259, y: 158 },
       'autumn-fall': { x: 329, y: 163 },
       'bergen-trails': { x: 189, y: 168 },
       'cargo-ship': { x: 370, y: 260 },
       'cold-dng': { x: 204, y: 68 },
-      forest: { x: 415, y: 153 },
-      jungle: { x: 279, y: 113 },
+      'final-dng': { x: 40, y: 139 },
       'jungle-city': { x: 313, y: 128 },
       'rhombus-sqr': { x: 275, y: 248 },
       'rookie-harbor': { x: 273, y: 198 },
+      arid: { x: 454, y: 213 },
+      beach: { x: 175, y: 277 },
+      forest: { x: 415, y: 153 },
+      jungle: { x: 279, y: 113 },
     };
 
-    const AREAS_WITH_REVEAL = [
+    const AREAS_WITH_REVEAL = new Set([
       'arid',
       'autumn-area',
       'autumn-fall',
+      'beach',
       'bergen-trails',
+      'final-dng',
       'forest',
       'heat-area',
       'jungle',
       'rookie-harbor',
-    ];
+    ]);
 
     const BUTTON_SPRITE = {
       srcX: 0,
@@ -99,8 +103,7 @@ ig.module('game.feature.world-map-overhaul')
           this.patchedGfx,
           BUTTON_SPRITE.posX,
           BUTTON_SPRITE.posY,
-          BUTTON_SPRITE.srcX +
-            sc.AREA_TYPE[this.area.areaType] * BUTTON_SPRITE.width,
+          BUTTON_SPRITE.srcX + sc.AREA_TYPE[this.area.areaType] * BUTTON_SPRITE.width,
           BUTTON_SPRITE.srcY + (this.activeArea ? 1 : 0) * BUTTON_SPRITE.height,
           BUTTON_SPRITE.width,
           BUTTON_SPRITE.height,
@@ -119,31 +122,19 @@ ig.module('game.feature.world-map-overhaul')
       _areasGfx: [],
       _areaVisitStatuses: null,
 
-      _addAreas(...args) {
-        this._areaVisitStatuses = new Map();
-        for (let id of AREAS_WITH_REVEAL) {
-          this._areaVisitStatuses.set(id, false);
+      _addAreas() {
+        for (let [id, area] of Object.entries(sc.map.areas)) {
+          let visited =
+            (!area.condition || new ig.VarCondition(area.condition).evaluate()) &&
+            sc.map.getVisitedArea(id);
+          if (visited) {
+            this.addChildGui(this._addAreaButton(id, area));
+          }
+          if (AREAS_WITH_REVEAL.has(id)) {
+            let overlayType = visited ? 'colored' : 'default';
+            this._areasGfx.push(new ig.Image(`${ASSETS_DIR}/overlays/${overlayType}/${id}.png`));
+          }
         }
-
-        let result = this.parent(...args);
-
-        for (let [id, visited] of this._areaVisitStatuses) {
-          let overlayType = visited ? 'colored' : 'default';
-          this._areasGfx.push(
-            new ig.Image(`${ASSETS_DIR}/overlays/${overlayType}/${id}.png`),
-          );
-        }
-        this._areaVisitStatuses = null;
-
-        return result;
-      },
-
-      _addAreaButton(id, area, ...args) {
-        let btn = this.parent(id, area, ...args);
-        if (this._areaVisitStatuses.has(id)) {
-          this._areaVisitStatuses.set(id, true);
-        }
-        return btn;
       },
 
       updateDrawables(renderer) {
