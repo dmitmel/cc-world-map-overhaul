@@ -125,9 +125,10 @@ ig.module('game.feature.world-map-overhaul')
       _addAreas() {
         let visitedAreas = [];
         for (let [id, area] of Object.entries(sc.map.areas)) {
-          let visited =
+          let visited = Boolean(
             (!area.condition || new ig.VarCondition(area.condition).evaluate()) &&
-            sc.map.getVisitedArea(id);
+              sc.map.getVisitedArea(id),
+          );
           if (visited) {
             visitedAreas.push([id, area]);
           }
@@ -160,9 +161,12 @@ ig.module('game.feature.world-map-overhaul')
         this.parent();
         this.id = id;
 
-        let revealVarName = `menu.circuit.start.${id}`;
-        let showRevealAnimation = !ig.vars.get(revealVarName);
-        ig.vars.set(revealVarName, true);
+        let visitedVarName = `menu.circuit.start.${id}`;
+        let visitedVarValue = ig.vars.get(visitedVarName);
+        if (visitedVarValue == null) visitedVarValue = visited;
+        ig.vars.set(visitedVarName, visited);
+
+        let showRevealAnimation = visited && !visitedVarValue;
 
         let size = Vec2.createC(ig.system.width, ig.system.height);
         this.setSize(size.x, size.y);
