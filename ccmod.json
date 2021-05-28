@@ -10,5 +10,39 @@
   "icons": {
     "24": "icon24.png"
   },
-  "prestart": "prestart.js"
+  "prestart": "prestart.js",
+  "assets": [
+    "media/gui/better-world-map/overlays/colored/arid.png",
+    "media/gui/better-world-map/overlays/colored/autumn-area.png",
+    "media/gui/better-world-map/overlays/colored/autumn-fall.png",
+    "media/gui/better-world-map/overlays/colored/beach.png",
+    "media/gui/better-world-map/overlays/colored/bergen-trails.png",
+    "media/gui/better-world-map/overlays/colored/final-dng.png",
+    "media/gui/better-world-map/overlays/colored/forest.png",
+    "media/gui/better-world-map/overlays/colored/heat-area.png",
+    "media/gui/better-world-map/overlays/colored/jungle.png",
+    "media/gui/better-world-map/overlays/colored/rookie-harbor.png",
+    "media/gui/better-world-map/overlays/default/arid.png",
+    "media/gui/better-world-map/overlays/default/autumn-area.png",
+    "media/gui/better-world-map/overlays/default/autumn-fall.png",
+    "media/gui/better-world-map/overlays/default/beach.png",
+    "media/gui/better-world-map/overlays/default/bergen-trails.png",
+    "media/gui/better-world-map/overlays/default/final-dng.png",
+    "media/gui/better-world-map/overlays/default/forest.png",
+    "media/gui/better-world-map/overlays/default/heat-area.png",
+    "media/gui/better-world-map/overlays/default/jungle.png",
+    "media/gui/better-world-map/overlays/default/rookie-harbor.png",
+    "media/gui/better-world-map/overlays/reveal/arid.png",
+    "media/gui/better-world-map/overlays/reveal/autumn-area.png",
+    "media/gui/better-world-map/overlays/reveal/autumn-fall.png",
+    "media/gui/better-world-map/overlays/reveal/beach.png",
+    "media/gui/better-world-map/overlays/reveal/bergen-trails.png",
+    "media/gui/better-world-map/overlays/reveal/final-dng.png",
+    "media/gui/better-world-map/overlays/reveal/forest.png",
+    "media/gui/better-world-map/overlays/reveal/heat-area.png",
+    "media/gui/better-world-map/overlays/reveal/jungle.png",
+    "media/gui/better-world-map/overlays/reveal/rookie-harbor.png",
+    "media/gui/better-world-map/patched-area-buttons.png",
+    "media/gui/better-world-map/sea.png"
+  ]
 }
