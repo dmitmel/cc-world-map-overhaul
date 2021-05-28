@@ -3,7 +3,7 @@
   "ccmodHumanName": "World map overhaul",
   "description": "A better world map",
   "homepage": "https://github.com/dmitmel/cc-world-map-overhaul",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "prestart": "prestart.js",
   "assets": [
     "media/gui/better-world-map/overlays/colored/arid.png",
