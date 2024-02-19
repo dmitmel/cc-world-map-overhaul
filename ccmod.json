@@ -6,7 +6,9 @@
     "en_US": "A better world map",
     "ru_RU": "Улучшенная карта мира"
   },
-  "homepage": "https://github.com/dmitmel/cc-world-map-overhaul",
+  "repository": "https://github.com/dmitmel/cc-world-map-overhaul",
+  "tags": ["cosmetic"],
+  "authors": "dmitmel",
   "icons": {
     "24": "icon24.png"
   },
